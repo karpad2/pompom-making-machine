@@ -1,0 +1,13 @@
+(*2*)
+(* Network 0 *)
+(*Counter*)
+LD    %M3.0
+CTU   C1, cnt_reset, 32767
+__CR_EQ_1
+MOVE    C1, finished_int
+__CR_RESTORE
+ST   %BR0.0
+(* Network 1 *)
+(*memória mentés*)
+LD    %M3.0
+I_TO_B    finished_int, finished_cnt

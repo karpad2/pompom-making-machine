@@ -1,0 +1,35 @@
+(*2*)
+(* Network 0 *)
+(*Tekercs szamitas*)
+LD    TRUE
+MOVE    menetszam, crotated
+MUL    200, crotated
+(* Network 1 *)
+LD    TRUE
+I_TO_DI    crotated, crot_di
+(* Network 2 *)
+LD    %I0.5
+ST   %SM201.7
+ST   calc_don
+(* Network 3 *)
+LD    FALSE
+PREL    0, started, minf, maxf, felfutas_ido, crot_di, drolling, jogfail, jogeid
+(* Network 4 *)
+LD    %I0.0
+CTU   C2, start_gomb, 200
+__CR_EQ_1
+MOVE    C2, ccounter
+__CR_RESTORE
+ST   rollingd
+(* Network 5 *)
+LDN    rollingd
+AND    %M3.2
+AND    %SM0.0
+PJOG    0, start_gomb, DW#125, 0, drolling, jogfail, jogeid
+(* Network 6 *)
+LDN    rollingd
+AND    %M3.2
+ST   %Q0.7
+(* Network 7 *)
+LD    rollingd
+ST   %BR0.0

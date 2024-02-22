@@ -1,0 +1,5 @@
+VAR
+    done  AT  %L1.6 : BOOL ; (*  *) 
+    jogfail  AT  %L1.7 : BOOL ; (*  *) 
+    jogeid  AT  %LB51 : BYTE ; (*  *) 
+END_VAR

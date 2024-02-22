@@ -1,0 +1,12 @@
+VAR
+    crotated  AT  %LW44 : INT ; (*  *) 
+    crot_di  AT  %LD46 : DINT ; (*  *) 
+    calc_don  AT  %L1.2 : BOOL ; (*  *) 
+    drolling  AT  %L1.3 : BOOL ; (*  *) 
+    jogfail  AT  %L1.4 : BOOL ; (*  *) 
+    jogeid  AT  %LB50 : BYTE ; (*  *) 
+    minf  AT  %LW52 : WORD ; (*  *) 
+    maxf  AT  %LD54 : DWORD ; (*  *) 
+    ccounter  AT  %LW58 : INT ; (*  *) 
+    rollingd  AT  %L1.5 : BOOL ; (*  *) 
+END_VAR

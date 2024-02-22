@@ -1,0 +1,248 @@
+(*2*)
+(* Network 0 *)
+(*Main Loop*)
+LD    %I0.5
+OR    %M3.2
+OR    %M4.0
+ANDN    gl_stop
+ST   %M3.2
+(* Network 1 *)
+LD    %I0.5
+OR    %M4.0
+ANDN    %M3.2
+OR    %M3.0
+ST   reset_cn
+(* Network 2 *)
+LD    %I0.3
+OR    %M4.1
+ORN    %I0.4
+OR    %M3.0
+ST   gl_stop
+(* Network 3 *)
+LD    initart
+ANDN    %I0.6
+ST   vago_les
+(* Network 4 *)
+LD    %M5.0
+ORN    %M3.2
+ANDN    %I0.0
+ST   st_ini_s
+(* Network 5 *)
+LD    initart
+ANDN    %I0.2
+ST   szet_ini
+(* Network 6 *)
+LD    szet_ini
+OR    vagoszet
+ST   %Q0.5
+(* Network 7 *)
+LD    %I0.6
+AND    Emelole
+OR    moving_d
+ST   moving_d
+(* Network 8 *)
+LD    %SM0.1
+OR    Emelole
+ANDN    %I0.6
+ST   Emelole
+(* Network 9 *)
+LD    %SM0.1
+MOVE    0, irany
+MOVE    DW#500, seb3
+(* Network 10 *)
+LD    %I0.6
+AND    %I0.0
+ST   initki
+(* Network 11 *)
+LD    %SM0.1
+OR    %M3.0
+OR    gl_stop
+RS   RS0   initki
+ST   initart
+(* Network 12 *)
+LD    %M4.3
+OR    %M5.0
+OR    initart
+ANDN    %M3.2
+AND    initart
+ST   %M5.0
+(* Network 13 *)
+LD    %M5.0
+OR(
+LD    %M5.1
+AND    %M3.2
+)
+ST   %Q1.0
+(* Network 14 *)
+LD    TRUE
+B_TO_I    finished_cnt, finished_int
+(* Network 15 *)
+(*Tekercseles*)
+LD    %M3.2
+ANDN    %M3.6
+ST   %M5.1
+ST   %Q0.7
+(* Network 16 *)
+LD    %M5.0
+ANDN    %I0.0
+OR(
+LD    hajtas
+ANDN    gyors_ht
+)
+ST   lassu
+(* Network 17 *)
+LD    lassu
+ANDN    vago_cuc
+OR(
+LD    %M3.2
+AND    gyors_ht
+)
+ST   hajtas
+(* Network 18 *)
+LD    hajtas
+ANDN    gyors_ht
+ANDN    lassu3
+OR    gl_stop
+OR(
+LD    vago_be
+AND    %I0.1
+)
+OR(
+LD    gyor_st
+ANDN    lassu3
+ANDN    vago_cuc
+ANDN    %M3.0
+)
+OR(
+LD    %M5.0
+AND    %I0.0
+)
+OR(
+LD    lassu3
+AND    %M3.6
+)
+ST   allj
+(* Network 19 *)
+LD    hajtas
+TON   T0, 1
+ST   tekeres2
+(* Network 20 *)
+LD    lassu
+TON   T7, 50
+ST   lassu3
+(* Network 21 *)
+LD    vago_cuc
+TON   T10, 50
+ST   porgetes
+(* Network 22 *)
+LD    hajtas
+AND    lassu
+ST   lassu_st
+(* Network 23 *)
+LD    hajtas
+OR    lassu
+OR    vago_cuc
+R    %SM201.7
+(* Network 24 *)
+LD    allj
+TON   T2, 1
+ST   allj2
+(* Network 25 *)
+LDN    allj
+PJOG    0, lassu3, DW#125, 1, dtekeres, djogfail, djogeid
+(* Network 26 *)
+LD    vago_cuc
+PJOGA    0, porgetes, W#300, DW#1200, W#3000, 0, dtekeres, djogfail, djogeid
+(* Network 27 *)
+LD    hajtas
+ANDN    allj
+AND    %M3.2
+PJOGA    0, tekeres2, W#300, DW#5000, W#3000, 1, dtekeres, djogfail, djogeid
+(* Network 28 *)
+LD    %M3.2
+MOVE    menetszam, szamegy
+SUB    2, szamegy
+(* Network 29 *)
+LD    %I0.0
+AND    %M3.2
+CTU   C3, reset_cn, szamegy
+__CR_EQ_1
+MOVE    C3, aktualis
+__CR_RESTORE
+STN   gyors_ht
+(* Network 30 *)
+LDN    gyors_ht
+ST   gyor_st
+(* Network 31 *)
+LD    %I0.0
+AND    %M5.1
+CTU   C5, reset_cn, menetszam
+__CR_EQ_1
+MOVE    C5, aktualis
+__CR_RESTORE
+TON   T12, 7
+STN   %M5.1
+ST   %M3.6
+(* Network 32 *)
+LD    %SM0.0
+PSTOP    0, allj2, djogfail, djogeid
+(* Network 33 *)
+LD    vago_les
+OR(
+LD    vago_be
+AND    %SM0.3
+TON   T11, 20
+)
+OR(
+LD    m_le_vu
+ANDN    vago_be
+)
+ST   %Q0.3
+(* Network 34 *)
+LD    %M4.5
+OR    %I0.7
+OR    vago_cuc
+ANDN    %I0.1
+ANDN    gl_stop
+ST   vago_cuc
+ST   %Q0.4
+(* Network 35 *)
+LD    vago_cuc
+RS   RS4   vago_felso_veg
+STN   elvagva2
+(* Network 36 *)
+LD    vago_cuc
+TON   T9, 800
+ST   vago_be
+(* Network 37 *)
+(*ha elvágja a fenti részt*)
+LD    %M3.2
+AND(
+LD    %I0.1
+OR    elvagva
+)
+OR    elvagva2
+ST   elvagva
+(* Network 38 *)
+LD    vago_be
+ST   vagoszet
+(* Network 39 *)
+LD    %M3.2
+OR    elvagva2
+AND(
+LD    elvagva
+OR    m_le_vu
+)
+ANDN    %I0.6
+ST   m_le_vu
+(* Network 40 *)
+LD    %M3.2
+AND    %I0.1
+ST   %M3.0
+(* Network 41 *)
+LD    %M3.0
+CTU   C20, %M4.2, 32767
+__CR_EQ_1
+MOVE    C20, finished_cnt1
+__CR_RESTORE
+ST   %BR0.0

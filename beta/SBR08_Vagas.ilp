@@ -1,0 +1,9 @@
+(*2*)
+(* Network 0 *)
+LD    TRUE
+ANDN    %I0.1
+ST   %M2.2
+STN   %Q1.0
+(* Network 1 *)
+LD    TRUE
+PJOG    0, %M2.2, DW#200, 0, done, jogfail, jogeid
